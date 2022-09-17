@@ -21,7 +21,8 @@ const characters = [
         "animations" : {
             "spin" : {
                 "row" : 0,
-                "steps" : [5, 5, 5, 5, 5, 5]
+                "steps" : [5, 5, 5, 5, 5, 5],
+                "face" : 0
             }
         },
     },
@@ -48,32 +49,38 @@ const characters = [
             "left" : {
                 "row" : 0,
                 "steps" : [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-                "flip" : "right"
+                "flip" : "right",
+                "face" : -1
             },
             "right" : {
                 "row" : 1,
                 "steps" : [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-                "flip" : "left"
+                "flip" : "left",
+                "face" : 1
             },
             "click_left" : {
                 "row" : 2,
                 "steps" : [1, 1, 1, 10, 1, 1],
-                "flip" : "click_right"
+                "flip" : "click_right",
+                "face" : -1
             },
             "click_right" : {
                 "row" : 3,
                 "steps" : [1, 1, 1, 10, 1, 1],
-                "flip" : "click_left"
+                "flip" : "click_left",
+                "face" : 1
             },
             "bump_left" : {
                 "row" : 4,
                 "steps" : [1, 1, 10, 1, 1],
-                "flip" : "bump_right"
+                "flip" : "bump_right",
+                "face" : -1
             },
             "bump_right" : {
                 "row" : 5,
                 "steps" : [1, 1, 10, 1, 1],
-                "flip" : "bump_left"
+                "flip" : "bump_left",
+                "face" : 1
             }
         },
     }

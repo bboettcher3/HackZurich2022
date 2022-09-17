@@ -69,11 +69,10 @@ function updateTarget(sprite) {
         if (sprite.current.x == sprite.current.targetX) {
             if (sprite.current.targetX == 0) {
                 sprite.current.targetX = 100;
-                sprite.current.animation = "right";
             } else {
                 sprite.current.targetX = 0;
-                sprite.current.animation = "left";
             }
+            sprite.current.animation = sprite.animations[sprite.current.animation].flip;
             sprite.current.rateX *= -1;
         }
     }
@@ -111,7 +110,7 @@ function renderSprite() {
             sprite.current.y, // dst Y
             sprite.current.width, // dst width
             sprite.current.height); // dst hight
-    });
+        });
 }
 
 function animationLoop() {
