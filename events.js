@@ -110,7 +110,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         }
         if (closestDistance == Infinity) { return; }
 
-        let firstTag = closestElements.innerHTML.indexOf("<");
+        let firstTag = closestElements.innerHTML.indexOf("<a");
         let firstNonLinkWords = closestElements.innerHTML.substring(0, firstTag);
         let words = firstNonLinkWords.split(" ");
         // not the first word, too easy
