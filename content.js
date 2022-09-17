@@ -73,6 +73,7 @@ function moveSprite(sprite) {
 
 function updateTarget(sprite) {
     if (sprite.name == "frog") {
+        var lastStep = sprite.current.stepCount == sprite.animations[sprite.current.animation].steps.length - 1;
         // simple logic to have it go back and forth with hardcoded target
         if (sprite.current.animation.startsWith("walk_")) {
             if (sprite.current.x == sprite.current.targetX) {
@@ -90,7 +91,7 @@ function updateTarget(sprite) {
             }
         } else if (sprite.current.animation.startsWith("bump_")) {
             // done with bump
-            if (sprite.current.stepCount == sprite.animations[sprite.current.animation].steps.length - 1) {
+            if (lastStep) {
                 // Just walk left every time after getting bumped and resume pacing
                 setNewAnimation(sprite.current, "walk_left", sprite.current.idleX, sprite.current.idleY, "walk_right");
                 enableScroll();
@@ -100,14 +101,19 @@ function updateTarget(sprite) {
             }
         } else if (sprite.current.animation.startsWith("click_")) {
             // done with click
-            if (sprite.current.stepCount == sprite.animations[sprite.current.animation].steps.length - 1) {
+            if (lastStep) {
                 setNewAnimation(sprite.current, "walk_left", sprite.current.idleX, sprite.current.idleY, "walk_right");
                 // TODO: open link
 
             }
         } else if (sprite.current.animation.startsWith("sleep_")) {
             // done with sleep
-            if (sprite.current.stepCount == sprite.animations[sprite.current.animation].steps.length - 1) {
+            if (lastStep) {
+                setNewAnimation(sprite.current, "walk_left", sprite.current.idleX, sprite.current.idleY, "walk_right");
+            }
+        } else if (sprite.current.animation.startsWith("dj_")) {
+            // done with audio clip
+            if (audio.paused) {
                 setNewAnimation(sprite.current, "walk_left", sprite.current.idleX, sprite.current.idleY, "walk_right");
             }
         }
