@@ -52,6 +52,14 @@ const characters = [
             "right" : {
                 "row" : 1,
                 "steps" : [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+            },
+            "click left" : {
+                "row" : 2,
+                "steps" : [1, 1, 1, 10, 1, 1]
+            },
+            "click right" : {
+                "row" : 3,
+                "steps" : [1, 1, 1, 10, 1, 1]
             }
         },
     }
