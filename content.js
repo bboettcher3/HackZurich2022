@@ -36,7 +36,7 @@ characters.forEach((sprite) => {
     sprites[sprites.length - 1].onload = onSpirteLoad;
 });
 
-var currentSprites = [sprites[0]];
+var currentSprites = [sprites[0], sprites[1]];
 
 const context = canvas.getContext("2d");
 
@@ -63,6 +63,22 @@ function moveSprite(current) {
     }
 }
 
+function updateTarget(spirte) {
+    if (spirte.name == "frog") {
+        // simple logic to have it go back and forth with hardcoded target
+        if (spirte.current.x == spirte.current.targetX) {
+            if (spirte.current.targetX == 0) {
+                spirte.current.targetX = 100;
+                spirte.current.animation = "right";
+            } else {
+                spirte.current.targetX = 0;
+                spirte.current.animation = "left";
+            }
+            spirte.current.rateX *= -1;
+        }
+    }
+}
+
 function renderSprite() {
     // Note: if 2 or more sprites are on the same pixel,
     // the last in the array will be rendered last and seen over the other ones #PaintersAlgorithm
@@ -71,6 +87,7 @@ function renderSprite() {
         assert(sprite.current.spriteIndex < currentSprites.length, "bad spirit length of " + sprite.current.spriteIndex + " for " + sprite.name);
 
         moveSprite(sprite.current);
+        updateTarget(sprite);
 
         let animation = sprite.animations[sprite.current.animation];
         if (sprite.current.frameCount >= animation.steps[sprite.current.stepCount]) {
