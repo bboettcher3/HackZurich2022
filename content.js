@@ -40,6 +40,12 @@ var currentSprites = [sprites[0], sprites[1]];
 
 const context = canvas.getContext("2d");
 
+function setNewAnimation(current, newAnimation) {
+    current.animation = newAnimation;
+    current.frameCount = 0;
+    current.stepCount = 0;
+}
+
 function moveSprite(current) {
     if (current.x != current.targetX) {
         current.x += current.rateX;
@@ -73,7 +79,7 @@ function updateTarget(sprite) {
                 sprite.current.targetX = 0;
             }
             // This is because drawImage() can't do a fast mirror/flip draw
-            sprite.current.animation = sprite.animations[sprite.current.animation].flip;
+            setNewAnimation(sprite.current, sprite.animations[sprite.current.animation].flip);
             sprite.current.rateX = Math.abs(sprite.current.rateX) * sprite.animations[sprite.current.animation].face;
         }
     }
