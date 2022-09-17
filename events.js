@@ -61,6 +61,9 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         // Find closest link match to character
         for (var i = l.length - 1; i >= 0; i--) {
             if (l[i].href == request.request.linkUrl) {
+                // some URLs are not being displayed and we don't want
+                if (l[i].getBoundingClientRect().left == 0 || l[i].getBoundingClientRect().top == 0) {continue;}
+
                 var a = currentPosition[0] - (l[i].getBoundingClientRect().left + window.scrollX);
                 var b = currentPosition[1] - (l[i].getBoundingClientRect().top + window.scrollY);
                 var distance = Math.hypot(a,b);
