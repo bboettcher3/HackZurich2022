@@ -22,7 +22,7 @@ const FRAME_RATE_MS = 33; // 30 FPS
 
 var sprites = [];
 var spritesLoaded = 0;
-function onSpirteLoad() {
+function onSpriteLoad() {
     spritesLoaded++;
     if (spritesLoaded >= characters.length) {
         // start once everything is loaded
@@ -33,7 +33,7 @@ function onSpirteLoad() {
 characters.forEach((sprite) => {
     sprites.push(new Image());
     sprites[sprites.length - 1].src = chrome.runtime.getURL(sprite.source);
-    sprites[sprites.length - 1].onload = onSpirteLoad;
+    sprites[sprites.length - 1].onload = onSpriteLoad;
 });
 
 var currentSprites = [sprites[0], sprites[1]];
@@ -63,18 +63,18 @@ function moveSprite(current) {
     }
 }
 
-function updateTarget(spirte) {
-    if (spirte.name == "frog") {
+function updateTarget(sprite) {
+    if (sprite.name == "frog") {
         // simple logic to have it go back and forth with hardcoded target
-        if (spirte.current.x == spirte.current.targetX) {
-            if (spirte.current.targetX == 0) {
-                spirte.current.targetX = 100;
-                spirte.current.animation = "right";
+        if (sprite.current.x == sprite.current.targetX) {
+            if (sprite.current.targetX == 0) {
+                sprite.current.targetX = 100;
+                sprite.current.animation = "right";
             } else {
-                spirte.current.targetX = 0;
-                spirte.current.animation = "left";
+                sprite.current.targetX = 0;
+                sprite.current.animation = "left";
             }
-            spirte.current.rateX *= -1;
+            sprite.current.rateX *= -1;
         }
     }
 }
