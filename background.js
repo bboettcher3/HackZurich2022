@@ -1,7 +1,7 @@
 chrome.runtime.onInstalled.addListener(async () => {
     chrome.contextMenus.create({
         id: "link_click",
-        title: "Frog click お願いします",
+        title: "click link お願いします",
         type: 'normal',
         contexts: ['link'],
     });
@@ -28,6 +28,12 @@ chrome.runtime.onInstalled.addListener(async () => {
         title: "graffiti",
         type: 'normal',
         contexts: ['image'],
+    });
+    chrome.contextMenus.create({
+        id: "follow",
+        title: "follow mouse",
+        type: 'normal',
+        contexts: ['all'],
     });
 });
 

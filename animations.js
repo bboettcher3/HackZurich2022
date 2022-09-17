@@ -1,5 +1,5 @@
 const characters = [
-    {
+    /*{
         "name" : "bunny",
         "source" : "images/bunny.png",
         "height" : 128, // source
@@ -26,7 +26,7 @@ const characters = [
                 "face" : 0
             }
         },
-    },
+    },*/
     {
         "name" : "frog",
         "source" : "images/frog.png",
@@ -36,7 +36,7 @@ const characters = [
             "animation" : "walk_right",
             "stepCount" : 0,
             "frameCount" : 0,
-            "spriteIndex" : 1,
+            "spriteIndex" : 0,
             "width" : 64, // display size
             "height" : 64,
             "x" : 0,

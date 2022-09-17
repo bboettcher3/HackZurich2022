@@ -40,12 +40,12 @@ function enableScroll() {
 }
 
 window.onscroll = function() {
-    // characters[1] hardcoded to Frog
-    let current = characters[1].current;
+    // characters[0] hardcoded to Frog
+    let current = characters[0].current;
     if (current.bumped == false && current.y < window.scrollY) {
         disableScroll();
         scroll(window.scrollX, current.y);
-        setNewAnimation(current, isFacingRight(characters[1]) ? "bump_right" : "bump_left");
+        setNewAnimation(current, isFacingRight(characters[0]) ? "bump_right" : "bump_left");
         // stop moving
         current.targetX = current.x;
         current.targetY = current.y;
@@ -58,7 +58,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         var closestX = 0;
         var closestY = 0;
         var closestDistance = Infinity;
-        var currentPosition = [characters[1].current.x, characters[1].current.y];
+        var currentPosition = [characters[0].current.x, characters[0].current.y];
         // Find closest link match to character
         for (var i = l.length - 1; i >= 0; i--) {
             if (l[i].href == request.request.linkUrl) {
@@ -80,17 +80,19 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
             console.log("link found with position: " + closestX + ", " + closestY);
             const direction = (currentPosition[0] < closestX) ? "right" : "left";
             // half the height since finger is in middle of body
-            let fingerOffset = characters[1].current.height * .55;
-            setNewAnimation(characters[1].current, "walk_" + direction, closestX - fingerOffset, closestY - fingerOffset, "click_" + direction);
+            let fingerOffset = characters[0].current.height * .55;
+            setNewAnimation(characters[0].current, "walk_" + direction, closestX - fingerOffset, closestY - fingerOffset, "click_" + direction);
         }
     } else  if (request.request.menuItemId == "sleep") {
-        const sleepAnim = isFacingRight(characters[1]) ? "sleep_right" : "sleep_left";
-        setNewAnimation(characters[1].current, sleepAnim,
-            characters[1].current.x, characters[1].current.y, "walk_left");
+        const sleepAnim = isFacingRight(characters[0]) ? "sleep_right" : "sleep_left";
+        setNewAnimation(characters[0].current, sleepAnim,
+            characters[0].current.x, characters[0].current.y, "walk_left");
+    } else if (request.request.menuItemId == "follow") {
+        
     } else if (request.request.menuItemId == "dj") {
         audio.play();
-        setNewAnimation(characters[1].current, "dj_right",
-            characters[1].current.x, characters[1].current.y, "walk_left");
+        setNewAnimation(characters[0].current, "dj_right",
+            characters[0].current.x, characters[0].current.y, "walk_left");
     } else if (request.request.menuItemId == "graffiti") {
         // find the image
         for(i = 0; i < document.getElementsByTagName("img").length; i++) {
@@ -99,8 +101,8 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
                 graffitiIndex = Math.floor(Math.random() * graffitiImagesSrc.length);
                 let x = graffitiElement.getBoundingClientRect().left + window.scrollX;
                 let y = graffitiElement.getBoundingClientRect().top + window.scrollY;
-                const direction = (characters[1].current.x < x) ? "walk_right" : "walk_left";
-                setNewAnimation(characters[1].current, direction, x, y, "spray_right");
+                const direction = (characters[0].current.x < x) ? "walk_right" : "walk_left";
+                setNewAnimation(characters[0].current, direction, x, y, "spray_right");
                 break;
             }
         }
@@ -114,7 +116,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
             // some URLs are not being displayed and we don't want
             if (elements[i].getBoundingClientRect().top <= 0) {continue;}
             let elementY = elements[i].getBoundingClientRect().top + window.scrollY;
-            let y = Math.abs(characters[1].current.y - elementY);
+            let y = Math.abs(characters[0].current.y - elementY);
             if (y < closestDistance) {
                 closestDistance = y;
                 closestY = elementY;
@@ -139,8 +141,8 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         if (hiddenElement) {
             let x = hiddenElement.getBoundingClientRect().left + window.scrollX;
             let y = hiddenElement.getBoundingClientRect().top + window.scrollY;
-            let fingerOffset = characters[1].current.height * .45;
-            setNewAnimation(characters[1].current, "walk_right", x - fingerOffset, y - fingerOffset, "erase_right");
+            let fingerOffset = characters[0].current.height * .45;
+            setNewAnimation(characters[0].current, "walk_right", x - fingerOffset, y - fingerOffset, "erase_right");
         }
     }
 });
