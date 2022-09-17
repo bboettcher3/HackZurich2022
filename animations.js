@@ -39,10 +39,10 @@ const characters = [
             "spriteIndex" : 1,
             "width" : 64, // display size
             "height" : 64,
-            "x" : 10,
+            "x" : 0,
             "y" : 300,
             "targetX" : 100,
-            "targetY" : 0,
+            "targetY" : 300,
             "bumped" : false,
             "idleX": 0,
             "idleY": 300,
