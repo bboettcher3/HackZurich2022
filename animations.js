@@ -84,16 +84,16 @@ const characters = [
                 "flip" : "bump_left",
                 "face" : 1
             },
-            "sleep" : {
+            "sleep_left" : {
                 "row" : 6,
-                "steps" : [1, 1, 1, 1, 1, 1, 1, 1, 1, 5],
-                "flip" : "sleep",
-                "face" : 1
+                "steps" : [1, 1, 1, 1, 1, 1, 1, 1, 1, 50, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+                "flip" : "sleep_right",
+                "face" : -1
             },
-            "wake_up" : {
+            "sleep_right" : {
                 "row" : 7,
-                "steps" : [5, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-                "flip" : "wake_up",
+                "steps" : [5, 1, 1, 1, 1, 1, 1, 1, 1, 50, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+                "flip" : "sleep_left",
                 "face" : 1
             }
         },
