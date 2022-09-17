@@ -54,25 +54,29 @@ window.onscroll = function() {
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     if (request.request.menuItemId == "link_click") {
         var l = document.links;
-        var closestTargetRect = {};
+        var closestX = 0;
+        var closestY = 0;
         var closestDistance = Infinity;
         var currentPosition = [characters[1].current.x, characters[1].current.y];
         // Find closest link match to character
         for (var i = l.length - 1; i >= 0; i--) {
             if (l[i].href == request.request.linkUrl) {
-                var a = currentPosition[0] - l[i].getBoundingClientRect().left;
-                var b = currentPosition[1] - l[i].getBoundingClientRect().top;
+                var a = currentPosition[0] - (l[i].getBoundingClientRect().left + window.scrollX);
+                var b = currentPosition[1] - (l[i].getBoundingClientRect().top + window.scrollY);
                 var distance = Math.hypot(a,b);
                 if (distance < closestDistance) {
                     closestDistance = distance;
-                    closestTargetRect = l[i].getBoundingClientRect();
+                    closestX = l[i].getBoundingClientRect().left + window.scrollX;
+                    closestY = l[i].getBoundingClientRect().top + window.scrollY;
                 }
             }
         }
-        if (closestTargetRect != {}) {
-            console.log("link found with position: " + closestTargetRect.left + ", " + closestTargetRect.top);
-            const direction = (currentPosition[0] < closestTargetRect.left) ? "right" : "left";
-            setNewAnimation(characters[1].current, "walk_" + direction, closestTargetRect.left, closestTargetRect.top, "click_" + direction);
+        if (closestDistance != Infinity) {
+            console.log("link found with position: " + closestX + ", " + closestY);
+            const direction = (currentPosition[0] < closestX) ? "right" : "left";
+            // half the height since finger is in middle of body
+            let fingerOffset = characters[1].current.height * .55;
+            setNewAnimation(characters[1].current, "walk_" + direction, closestX - fingerOffset, closestY - fingerOffset, "click_" + direction);
         }
     }
 
