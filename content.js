@@ -21,41 +21,56 @@ document.body.appendChild(canvas);
 
 const FRAME_RATE_MS = 33; // 30 FPS
 
-var currentCharacter = characters[0];
-var currentAnimation = "spin";
-var currentStep = 0;
-var frameCount = 0;
+var sprites = [];
+var spritesLoaded = 0;
+function onSpirteLoad() {
+    spritesLoaded++;
+    if (spritesLoaded >= characters.length) {
+        // start once everything is loaded
+        setInterval(animationLoop, FRAME_RATE_MS);
+    }
+}
 
-var drawing = new Image();
-drawing.src = chrome.runtime.getURL(currentCharacter.source);
-drawing.onload = function() {
-    // start once everything is loaded
-    setInterval(anim, FRAME_RATE_MS);
-};
+characters.forEach((sprite) => {
+    sprites.push(new Image());
+    sprites[sprites.length - 1].src = chrome.runtime.getURL(sprite.source);
+    sprites[sprites.length - 1].onload = onSpirteLoad;
+});
 
-function anim() {
-  const context = canvas.getContext("2d");
+var currentSprites = [sprites[0]];
+
+const context = canvas.getContext("2d");
+
+function renderSprite() {
+    characters.forEach((sprite) => {
+        let animation = sprite.animations[sprite.current.animation];
+        if (sprite.current.frameCount >= animation.steps[sprite.current.stepCount]) {
+            sprite.current.stepCount++;
+            if (sprite.current.stepCount >= animation.steps.length) {
+                sprite.current.stepCount = 0;
+            }
+            sprite.current.frameCount = 0;
+        } else {
+            sprite.current.frameCount++;
+        }
+
+        // Draw character in top left corner
+        sx = sprite.width * sprite.current.stepCount;
+        sy = sprite.height * animation.row;
+        context.drawImage(
+            currentSprites[sprite.current.spriteIndex],
+            sprite.width * sprite.current.stepCount, // src X
+            sprite.height * animation.row, // src Y
+            sprite.width, // src width
+            sprite.height, // src height
+            sprite.current.x, // dst X
+            sprite.current.y, // dst Y
+            sprite.width, // dst width
+            sprite.height); // dst hight
+    });
+}
+
+function animationLoop() {
   context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-
-  let animation = currentCharacter.animations[currentAnimation];
-  if (frameCount >= animation.steps[currentStep]) {
-      currentStep++;
-      if (currentStep >= animation.steps.length) {
-        currentStep = 0;
-      }
-      frameCount = 0;
-  } else {
-    frameCount++;
-  }
-
-  // Draw character in top left corner
-  sx = 128 * currentStep;
-  sy = 0;
-  sWidth = currentCharacter.width;
-  sHeight = currentCharacter.height;
-  dx = 0;
-  dy = 0;
-  dWidth = currentCharacter.width;
-  dHeight = currentCharacter.height;
-  context.drawImage(drawing, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight);
+  renderSprite();
 }
