@@ -47,27 +47,33 @@ const characters = [
         "animations" : {
             "left" : {
                 "row" : 0,
-                "steps" : [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+                "steps" : [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+                "flip" : "right"
             },
             "right" : {
                 "row" : 1,
-                "steps" : [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+                "steps" : [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+                "flip" : "left"
             },
-            "click left" : {
+            "click_left" : {
                 "row" : 2,
-                "steps" : [1, 1, 1, 10, 1, 1]
+                "steps" : [1, 1, 1, 10, 1, 1],
+                "flip" : "click_right"
             },
-            "click right" : {
+            "click_right" : {
                 "row" : 3,
-                "steps" : [1, 1, 1, 10, 1, 1]
+                "steps" : [1, 1, 1, 10, 1, 1],
+                "flip" : "click_left"
             },
-            "bump left" : {
+            "bump_left" : {
                 "row" : 4,
-                "steps" : [1, 1, 10, 1, 1]
+                "steps" : [1, 1, 10, 1, 1],
+                "flip" : "bump_right"
             },
-            "bump right" : {
-                "row" : 4,
-                "steps" : [1, 1, 10, 1, 1]
+            "bump_right" : {
+                "row" : 5,
+                "steps" : [1, 1, 10, 1, 1],
+                "flip" : "bump_left"
             }
         },
     }
