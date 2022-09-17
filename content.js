@@ -61,7 +61,7 @@ function moveSprite(sprite) {
         }
     }
     if (sprite.current.y != sprite.current.targetY) {
-        if (sprite.current.targetY > sprite.current.Y) {
+        if (sprite.current.targetY > sprite.current.y) {
             sprite.current.y += sprite.animations[sprite.current.animation].rate;
             sprite.current.y = Math.min(sprite.current.y, sprite.current.targetY);
         } else {
