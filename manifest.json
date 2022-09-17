@@ -23,7 +23,8 @@
     "type": "module"
   },
   "permissions": [
-    "contextMenus"
+    "contextMenus",
+    "tabs"
   ],
   "icons": {
     "16": "/images/icon_16.png",

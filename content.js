@@ -103,8 +103,9 @@ function updateTarget(sprite) {
             // done with click
             if (lastStep) {
                 setNewAnimation(sprite.current, "walk_left", sprite.current.idleX, sprite.current.idleY, "walk_right");
-                // TODO: open link
-
+                console.log(linkToClick);
+                chrome.runtime.sendMessage({url: linkToClick}, function(response) {});
+                linkToClick = "";
             }
         } else if (sprite.current.animation.startsWith("sleep_")) {
             // done with sleep

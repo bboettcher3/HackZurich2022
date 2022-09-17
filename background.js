@@ -25,3 +25,12 @@ chrome.contextMenus.onClicked.addListener((item, tab) => {
         chrome.tabs.sendMessage(tabs[0].id, {"request": item}, function(response) {});
     });
 });
+
+chrome.runtime.onMessage.addListener(
+  function(request, sender, sendResponse) {
+    if (request.url != "") {
+        chrome.tabs.create({ url: request.url});
+        return true;
+    }
+  }
+);

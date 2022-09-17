@@ -23,6 +23,7 @@ try {
 
 var wheelOpt = supportsPassive ? { passive: false } : false;
 var wheelEvent = 'onwheel' in document.createElement('div') ? 'wheel' : 'mousewheel';
+var linkToClick = "";
 
 function disableScroll() {
   window.addEventListener('DOMMouseScroll', preventDefault, false); // older FF
@@ -75,6 +76,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
             }
         }
         if (closestDistance != Infinity) {
+            linkToClick = request.request.linkUrl;
             console.log("link found with position: " + closestX + ", " + closestY);
             const direction = (currentPosition[0] < closestX) ? "right" : "left";
             // half the height since finger is in middle of body
