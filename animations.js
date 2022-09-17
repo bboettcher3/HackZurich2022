@@ -60,6 +60,14 @@ const characters = [
             "click right" : {
                 "row" : 3,
                 "steps" : [1, 1, 1, 10, 1, 1]
+            },
+            "bump left" : {
+                "row" : 4,
+                "steps" : [1, 1, 10, 1, 1]
+            },
+            "bump right" : {
+                "row" : 4,
+                "steps" : [1, 1, 10, 1, 1]
             }
         },
     }
