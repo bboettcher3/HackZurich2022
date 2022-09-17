@@ -72,8 +72,9 @@ function updateTarget(sprite) {
             } else {
                 sprite.current.targetX = 0;
             }
+            // This is because drawImage() can't do a fast mirror/flip draw
             sprite.current.animation = sprite.animations[sprite.current.animation].flip;
-            sprite.current.rateX *= -1;
+            sprite.current.rateX = Math.abs(sprite.current.rateX) * sprite.animations[sprite.current.animation].face;
         }
     }
 }
@@ -99,7 +100,6 @@ function renderSprite() {
             sprite.current.frameCount++;
         }
 
-        // Draw character in top left corner
         context.drawImage(
             currentSprites[sprite.current.spriteIndex],
             sprite.width * sprite.current.stepCount, // src X
