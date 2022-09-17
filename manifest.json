@@ -13,7 +13,8 @@
       "js": [
         "utils.js",
         "animations.js",
-        "content.js"
+        "content.js",
+        "events.js"
       ]
     }
   ],
