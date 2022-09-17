@@ -3,7 +3,7 @@ chrome.runtime.onInstalled.addListener(async () => {
         id: "link_click",
         title: "Frog click お願いします",
         type: 'normal',
-        contexts: ['selection'],
+        contexts: ['link'],
     });
 });
 

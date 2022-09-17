@@ -53,8 +53,27 @@ window.onscroll = function() {
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     if (request.request.menuItemId == "link_click") {
-        console.log(request.request.linkUrl);
-        console.log(request.request.selectionText);
+        var l = document.links;
+        var closestTargetRect = {};
+        var closestDistance = Infinity;
+        var currentPosition = [characters[1].current.x, characters[1].current.y];
+        // Find closest link match to character
+        for (var i = l.length - 1; i >= 0; i--) {
+            if (l[i].href == request.request.linkUrl) {
+                var a = currentPosition[0] - l[i].getBoundingClientRect().left;
+                var b = currentPosition[1] - l[i].getBoundingClientRect().top;
+                var distance = Math.hypot(a,b); 
+                if (distance < closestDistance) {
+                    closestDistance = distance;
+                    closestTargetRect = l[i].getBoundingClientRect();
+                }
+                
+            }
+        }
+        if (closestTargetRect != {}) {
+            console.log("link found with position: " + closestTargetRect.left + ", " + closestTargetRect.top);
+
+        }
     }
 });
 
