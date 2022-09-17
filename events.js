@@ -47,3 +47,10 @@ window.onscroll = function() {
         // characters[1].current.animation = "fall";
     }
 };
+
+chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+    if (request.request.menuItemId == "link_click") {
+        console.log(request.request.linkUrl);
+        console.log(request.request.selectionText);
+    }
+});

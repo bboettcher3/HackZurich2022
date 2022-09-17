@@ -22,7 +22,7 @@ const FRAME_RATE_MS = 33; // 30 FPS
 
 var sprites = [];
 var spritesLoaded = 0;
-function onSpriteLoad() {
+function onSpirteLoad() {
     spritesLoaded++;
     if (spritesLoaded >= characters.length) {
         // start once everything is loaded
@@ -33,7 +33,7 @@ function onSpriteLoad() {
 characters.forEach((sprite) => {
     sprites.push(new Image());
     sprites[sprites.length - 1].src = chrome.runtime.getURL(sprite.source);
-    sprites[sprites.length - 1].onload = onSpriteLoad;
+    sprites[sprites.length - 1].onload = onSpirteLoad;
 });
 
 var currentSprites = [sprites[0], sprites[1]];
@@ -63,18 +63,18 @@ function moveSprite(current) {
     }
 }
 
-function updateTarget(sprite) {
-    if (sprite.name == "frog") {
+function updateTarget(spirte) {
+    if (spirte.name == "frog") {
         // simple logic to have it go back and forth with hardcoded target
-        if (sprite.current.x == sprite.current.targetX) {
-            if (sprite.current.targetX == 0) {
-                sprite.current.targetX = 100;
-                sprite.current.animation = "right";
+        if (spirte.current.x == spirte.current.targetX) {
+            if (spirte.current.targetX == 0) {
+                spirte.current.targetX = 100;
+                spirte.current.animation = "right";
             } else {
-                sprite.current.targetX = 0;
-                sprite.current.animation = "left";
+                spirte.current.targetX = 0;
+                spirte.current.animation = "left";
             }
-            sprite.current.rateX *= -1;
+            spirte.current.rateX *= -1;
         }
     }
 }
@@ -84,7 +84,7 @@ function renderSprite() {
     // the last in the array will be rendered last and seen over the other ones #PaintersAlgorithm
     characters.forEach((sprite) => {
         if (sprite.current.spriteIndex == -1) { return; }
-        assert(sprite.current.spriteIndex < currentSprites.length, "bad sprite length of " + sprite.current.spriteIndex + " for " + sprite.name);
+        assert(sprite.current.spriteIndex < currentSprites.length, "bad spirit length of " + sprite.current.spriteIndex + " for " + sprite.name);
 
         moveSprite(sprite.current);
         updateTarget(sprite);
