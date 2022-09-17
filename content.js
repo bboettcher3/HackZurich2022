@@ -43,6 +43,8 @@ const context = canvas.getContext("2d");
 
 function renderSprite() {
     characters.forEach((sprite) => {
+        if (sprite.current.spriteIndex == -1) { return; }
+
         let animation = sprite.animations[sprite.current.animation];
         if (sprite.current.frameCount >= animation.steps[sprite.current.stepCount]) {
             sprite.current.stepCount++;
@@ -55,8 +57,6 @@ function renderSprite() {
         }
 
         // Draw character in top left corner
-        sx = sprite.width * sprite.current.stepCount;
-        sy = sprite.height * animation.row;
         context.drawImage(
             currentSprites[sprite.current.spriteIndex],
             sprite.width * sprite.current.stepCount, // src X
