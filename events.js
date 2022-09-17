@@ -83,13 +83,11 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
             let fingerOffset = characters[1].current.height * .55;
             setNewAnimation(characters[1].current, "walk_" + direction, closestX - fingerOffset, closestY - fingerOffset, "click_" + direction);
         }
-    }
-
-    if (request.request.menuItemId == "debug_sleep") {
+    } else  if (request.request.menuItemId == "sleep") {
         const sleepAnim = isFacingRight(characters[1]) ? "sleep_right" : "sleep_left";
         setNewAnimation(characters[1].current, sleepAnim,
             characters[1].current.x, characters[1].current.y, "walk_left");
-    } else if (request.request.menuItemId == "debug_dj") {
+    } else if (request.request.menuItemId == "dj") {
         audio.play();
         setNewAnimation(characters[1].current, "dj_right",
             characters[1].current.x, characters[1].current.y, "walk_left");

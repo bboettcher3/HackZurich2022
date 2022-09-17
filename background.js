@@ -6,14 +6,14 @@ chrome.runtime.onInstalled.addListener(async () => {
         contexts: ['link'],
     });
     chrome.contextMenus.create({
-        id: "debug_sleep",
-        title: "DEBUG sleep",
+        id: "sleep",
+        title: "sleep 😴",
         type: 'normal',
         contexts: ['all'],
     });
     chrome.contextMenus.create({
-        id: "debug_dj",
-        title: "DEBUG dj",
+        id: "dj",
+        title: "drop it hard skrill",
         type: 'normal',
         contexts: ['all'],
     });
