@@ -104,6 +104,12 @@ const characters = [
                 "steps" : [4, 4],
                 "flip" : "dj_right",
                 "face" : 1
+            },
+            "erase_right" : {
+                "row" : 9,
+                "steps" : [2, 2, 2, 2, 2, 2, 2, 2],
+                "flip" : "erase_right",
+                "face" : 1
             }
         },
     }

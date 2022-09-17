@@ -17,6 +17,12 @@ chrome.runtime.onInstalled.addListener(async () => {
         type: 'normal',
         contexts: ['all'],
     });
+    chrome.contextMenus.create({
+        id: "hide",
+        title: "削除してください",
+        type: 'normal',
+        contexts: ['all'],
+    });
 });
 
 // Open a new search tab when the user clicks a context menu

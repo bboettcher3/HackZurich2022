@@ -117,6 +117,14 @@ function updateTarget(sprite) {
             if (audio.paused) {
                 setNewAnimation(sprite.current, "walk_left", sprite.current.idleX, sprite.current.idleY, "walk_right");
             }
+        } else if (sprite.current.animation.startsWith("erase_")) {
+            // done with erasing
+            if (lastStep) {
+                setNewAnimation(sprite.current, "walk_left", sprite.current.idleX, sprite.current.idleY, "walk_right");
+                var hiddenElement = document.getElementById("toBeHidden");
+                hiddenElement.removeAttribute("id");
+                hiddenElement.setAttribute("style", "visibility: hidden;");
+            }
         }
     }
 }

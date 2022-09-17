@@ -91,6 +91,44 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         audio.play();
         setNewAnimation(characters[1].current, "dj_right",
             characters[1].current.x, characters[1].current.y, "walk_left");
+    } else if (request.request.menuItemId == "hide") {
+        var elements = document.getElementsByTagName("p");
+        var closestElements = undefined;
+        var closestY = 0;
+        var closestDistance = Infinity;
+        // Find closest link match to character
+        for (let i = elements.length - 1; i >= 0; i--) {
+            // some URLs are not being displayed and we don't want
+            if (elements[i].getBoundingClientRect().top <= 0) {continue;}
+            let elementY = elements[i].getBoundingClientRect().top + window.scrollY;
+            let y = Math.abs(characters[1].current.y - elementY);
+            if (y < closestDistance) {
+                closestDistance = y;
+                closestY = elementY;
+                closestElements = elements[i];
+            }
+        }
+        if (closestDistance == Infinity) { return; }
+
+        let firstTag = closestElements.innerHTML.indexOf("<");
+        let firstNonLinkWords = closestElements.innerHTML.substring(0, firstTag);
+        let words = firstNonLinkWords.split(" ");
+        // not the first word, too easy
+        for (let i = 1; i < words.length; i++) {
+            // nothing too short
+            if (words[i].length > 4) {
+                firstNonLinkWords = firstNonLinkWords.replace(words[i], "<span id='toBeHidden'>" + words[i] + "</span>");
+                break;
+            }
+        }
+        closestElements.innerHTML = firstNonLinkWords + closestElements.innerHTML.substr(firstTag);
+        var hiddenElement = document.getElementById("toBeHidden");
+        if (hiddenElement) {
+            let x = hiddenElement.getBoundingClientRect().left + window.scrollX;
+            let y = hiddenElement.getBoundingClientRect().top + window.scrollY;
+            let fingerOffset = characters[1].current.height * .45;
+            setNewAnimation(characters[1].current, "walk_right", x - fingerOffset, y - fingerOffset, "erase_right");
+        }
     }
 });
 
