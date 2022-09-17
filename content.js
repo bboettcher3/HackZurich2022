@@ -21,20 +21,6 @@ document.body.appendChild(canvas);
 
 const FRAME_RATE_MS = 33; // 30 FPS
 
-const characters = [
-    {
-        "name" : "bunny",
-        "source" : "images/bunny.png",
-        "height" : 128,
-        "width" : 128,
-        "animations" : {
-            "spin" : {
-                "count" : 6,
-                "steps" : [5, 5, 5, 5, 5, 5] // frame between each step
-            }
-        },
-    }
-];
 var currentCharacter = characters[0];
 var currentAnimation = "spin";
 var currentStep = 0;

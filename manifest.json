@@ -10,7 +10,7 @@
         "https://*/*"
       ],
       "css": ["content.css"],
-      "js": ["content.js"]
+      "js": ["animations.js", "content.js"]
     }
   ],
   "icons": {
