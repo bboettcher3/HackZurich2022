@@ -40,7 +40,7 @@ function anim() {
   let animation = currentCharacter.animations[currentAnimation];
   if (frameCount >= animation.steps[currentStep]) {
       currentStep++;
-      if (currentStep >= animation.count) {
+      if (currentStep >= animation.steps.length) {
         currentStep = 0;
       }
       frameCount = 0;
