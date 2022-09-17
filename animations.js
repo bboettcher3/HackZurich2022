@@ -11,6 +11,10 @@ const characters = [
             "spriteIndex" : 0,
             "x" : 0,
             "y" : 0,
+            "targetX" : 200,
+            "targetY" : 0,
+            "rateX" : 5,
+            "rateY" : 0,
         },
         "animations" : {
             "spin" : {
