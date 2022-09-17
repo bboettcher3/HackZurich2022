@@ -83,6 +83,18 @@ const characters = [
                 "steps" : [1, 1, 30, 1, 1],
                 "flip" : "bump_left",
                 "face" : 1
+            },
+            "sleep" : {
+                "row" : 6,
+                "steps" : [1, 1, 1, 1, 1, 1, 1, 1, 1, 5],
+                "flip" : "sleep",
+                "face" : 1
+            },
+            "wake_up" : {
+                "row" : 7,
+                "steps" : [5, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+                "flip" : "wake_up",
+                "face" : 1
             }
         },
     }
