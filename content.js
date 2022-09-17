@@ -92,8 +92,8 @@ function renderSprite() {
             sprite.height, // src height
             sprite.current.x, // dst X
             sprite.current.y, // dst Y
-            sprite.width, // dst width
-            sprite.height); // dst hight
+            sprite.current.width, // dst width
+            sprite.current.height); // dst hight
     });
 }
 
