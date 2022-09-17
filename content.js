@@ -48,7 +48,7 @@ function onSpriteLoad() {
     if (spritesLoaded >= characters.length) {
         // start once everything is loaded
         setInterval(animationLoop, FRAME_RATE_MS);
-        setInterval(timerCallback, 2000); // every 2 second
+        setInterval(timerCallback, 300); // every 2 second
     }
 }
 

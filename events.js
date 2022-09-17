@@ -24,6 +24,9 @@ try {
 var wheelOpt = supportsPassive ? { passive: false } : false;
 var wheelEvent = 'onwheel' in document.createElement('div') ? 'wheel' : 'mousewheel';
 var linkToClick = "";
+var followMouse = false;
+var followingStartTime = 0;
+const FOLLOW_LENGTH_SEC = 10;
 
 function disableScroll() {
   window.addEventListener('DOMMouseScroll', preventDefault, false); // older FF
@@ -88,7 +91,8 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         setNewAnimation(characters[0].current, sleepAnim,
             characters[0].current.x, characters[0].current.y, "walk_left");
     } else if (request.request.menuItemId == "follow") {
-        
+        followMouse = true;
+        followingStartTime = (new Date()).getTime();
     } else if (request.request.menuItemId == "dj") {
         audio.play();
         setNewAnimation(characters[0].current, "dj_right",
@@ -148,5 +152,16 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 });
 
 function timerCallback() {
-
+    if (followMouse) {
+        if ((new Date()).getTime() - followingStartTime > (FOLLOW_LENGTH_SEC * 1000)) {
+            followMouse = false;
+            setNewAnimation(characters[0].current, "walk_left", characters[0].current.idleX, characters[0].current.idleY, "walk_right");
+            console.log("I'm bored, going home");
+        } else {
+            console.log("I'm gonna getcha");
+            // Compute new direction and target
+            var animDirection = (characters[0].current.x > cursor.x) ? "walk_left" : "walk_right";
+            setNewAnimation(characters[0].current, animDirection, cursor.x, cursor.y);
+        }
+    }
 }
