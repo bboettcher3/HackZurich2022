@@ -43,7 +43,6 @@ const context = canvas.getContext("2d");
 
 // more readable name
 function isFacingRight(sprite) {
-    console.log(sprite.current.x);
     return sprite.animations[sprite.current.animation].face > 0
 }
 
@@ -56,7 +55,6 @@ function setNewAnimation(current, newAnimation, targetX, targetY, task="") {
     if (task != "") {
         current.task = task;
     }
-    
 }
 
 function moveSprite(sprite) {

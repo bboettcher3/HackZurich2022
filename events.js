@@ -72,7 +72,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         if (closestTargetRect != {}) {
             console.log("link found with position: " + closestTargetRect.left + ", " + closestTargetRect.top);
             const direction = (currentPosition[0] < closestTargetRect.left) ? "right" : "left";
-            setNewAnimation(characters[1].current, "walk_" + direction, closestTargetRect.left, closestTargetRect.Y, "click_" + direction);
+            setNewAnimation(characters[1].current, "walk_" + direction, closestTargetRect.left, closestTargetRect.top, "click_" + direction);
         }
     }
 
