@@ -17,6 +17,7 @@ const characters = [
             "targetY" : 0,
             "rateX" : 0,
             "rateY" : 0,
+            "bumped" : false
         },
         "animations" : {
             "spin" : {
@@ -32,7 +33,7 @@ const characters = [
         "height" : 128,
         "width" : 128,
         "current" : { // updated at runtime
-            "animation" : "right",
+            "animation" : "walk_right",
             "stepCount" : 0,
             "frameCount" : 0,
             "spriteIndex" : 1,
@@ -44,18 +45,19 @@ const characters = [
             "targetY" : 0,
             "rateX" : 2,
             "rateY" : 0,
+            "bumped" : false
         },
         "animations" : {
-            "left" : {
+            "walk_left" : {
                 "row" : 0,
                 "steps" : [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-                "flip" : "right",
+                "flip" : "walk_right",
                 "face" : -1
             },
-            "right" : {
+            "walk_right" : {
                 "row" : 1,
                 "steps" : [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-                "flip" : "left",
+                "flip" : "walk_left",
                 "face" : 1
             },
             "click_left" : {
@@ -72,13 +74,13 @@ const characters = [
             },
             "bump_left" : {
                 "row" : 4,
-                "steps" : [1, 1, 10, 1, 1],
+                "steps" : [1, 1, 30, 1, 1],
                 "flip" : "bump_right",
                 "face" : -1
             },
             "bump_right" : {
                 "row" : 5,
-                "steps" : [1, 1, 10, 1, 1],
+                "steps" : [1, 1, 30, 1, 1],
                 "flip" : "bump_left",
                 "face" : 1
             }

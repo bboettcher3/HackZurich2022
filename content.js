@@ -27,6 +27,7 @@ function onSpriteLoad() {
     if (spritesLoaded >= characters.length) {
         // start once everything is loaded
         setInterval(animationLoop, FRAME_RATE_MS);
+        setInterval(timerCallback, 2000); // every 2 second
     }
 }
 
@@ -39,6 +40,11 @@ characters.forEach((sprite) => {
 var currentSprites = [sprites[0], sprites[1]];
 
 const context = canvas.getContext("2d");
+
+// more readable name
+function isFacingRight(sprite) {
+    return sprite.animations[sprite.current.animation].face > 0
+}
 
 function setNewAnimation(current, newAnimation) {
     current.animation = newAnimation;
@@ -72,15 +78,23 @@ function moveSprite(current) {
 function updateTarget(sprite) {
     if (sprite.name == "frog") {
         // simple logic to have it go back and forth with hardcoded target
-        if (sprite.current.x == sprite.current.targetX) {
-            if (sprite.current.targetX == 0) {
-                sprite.current.targetX = 100;
-            } else {
-                sprite.current.targetX = 0;
+        if (sprite.current.animation.startsWith("walk_")) {
+            if (sprite.current.x == sprite.current.targetX) {
+                sprite.current.targetX = (sprite.current.targetX == 0) ? 100 : 0;
+                // This is because drawImage() can't do a fast mirror/flip draw
+                setNewAnimation(sprite.current, sprite.animations[sprite.current.animation].flip);
+                sprite.current.rateX = Math.abs(sprite.current.rateX) * sprite.animations[sprite.current.animation].face;
             }
-            // This is because drawImage() can't do a fast mirror/flip draw
-            setNewAnimation(sprite.current, sprite.animations[sprite.current.animation].flip);
-            sprite.current.rateX = Math.abs(sprite.current.rateX) * sprite.animations[sprite.current.animation].face;
+        } else if (sprite.current.animation.startsWith("bump_")) {
+            // done with bump
+            if (sprite.current.stepCount == sprite.animations[sprite.current.animation].steps.length - 1) {
+                setNewAnimation(sprite.current, isFacingRight(sprite) ? "walk_right" : "walk_left");
+                sprite.current.targetX = isFacingRight(sprite) ? 100 : 0;
+                enableScroll();
+                // todo - make better to prevent loop
+                scroll(window.scrollX, sprite.current.y - 1);
+                sprite.current.bumped = true;
+            }
         }
     }
 }

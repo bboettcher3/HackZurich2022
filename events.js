@@ -40,11 +40,14 @@ function enableScroll() {
 
 window.onscroll = function() {
     // characters[1] hardcoded to Frog
-    if (characters[1].current.y < window.scrollY) {
-        // TODO - need animation
-        // disableScroll();
-        // scroll(window.scrollX, 300);
-        // characters[1].current.animation = "fall";
+    let current = characters[1].current;
+    if (current.bumped == false && current.y < window.scrollY) {
+        disableScroll();
+        scroll(window.scrollX, current.y);
+        setNewAnimation(current, isFacingRight(characters[1]) ? "bump_right" : "bump_left");
+        // stop moving
+        current.targetX = current.x;
+        current.targetY = current.y;
     }
 };
 
@@ -54,3 +57,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         console.log(request.request.selectionText);
     }
 });
+
+function timerCallback() {
+
+}
