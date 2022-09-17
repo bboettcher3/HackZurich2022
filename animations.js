@@ -110,6 +110,12 @@ const characters = [
                 "steps" : [2, 2, 2, 2, 2, 2, 2, 2],
                 "flip" : "erase_right",
                 "face" : 1
+            },
+            "spray_right" : {
+                "row" : 10,
+                "steps" : [1, 1, 1, 1, 1, 1, 5, 2, 2, 2, 2, 2, 2, 2, 2, 5],
+                "flip" : "spray_right",
+                "face" : 1
             }
         },
     }

@@ -91,6 +91,19 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         audio.play();
         setNewAnimation(characters[1].current, "dj_right",
             characters[1].current.x, characters[1].current.y, "walk_left");
+    } else if (request.request.menuItemId == "graffiti") {
+        // find the image
+        for(i = 0; i < document.getElementsByTagName("img").length; i++) {
+            if (document.getElementsByTagName("img")[i].src == request.request.srcUrl) {
+                graffitiElement = document.getElementsByTagName("img")[i];
+                graffitiIndex = Math.floor(Math.random() * graffitiImagesSrc.length);
+                let x = graffitiElement.getBoundingClientRect().left + window.scrollX;
+                let y = graffitiElement.getBoundingClientRect().top + window.scrollY;
+                const direction = (characters[1].current.x < x) ? "walk_right" : "walk_left";
+                setNewAnimation(characters[1].current, direction, x, y, "spray_right");
+                break;
+            }
+        }
     } else if (request.request.menuItemId == "hide") {
         var elements = document.getElementsByTagName("p");
         var closestElements = undefined;

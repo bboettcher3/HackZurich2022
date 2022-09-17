@@ -4,7 +4,27 @@ canvas.id = "pixel-peeps-canvas";
 canvas.width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
 canvas.height = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
 
+// These should load fast enough locally to not worry about checking for onLoad() right now
 const audio = new Audio(chrome.runtime.getURL("audio/drop.mp3"));
+const GRAFFITI_SIZE = 256;
+const graffitiImagesSrc = [
+    // assumed to be 256x256
+    ["images/graffiti_1_half.png", "images/graffiti_1_full.png"],
+    ["images/graffiti_2_half.png", "images/graffiti_2_full.png"]
+]
+var graffitiIndex = 0;
+var graffitiElement = {};
+// load the images up once
+var graffitiImages = [];
+graffitiImagesSrc.forEach((imagesSrc) => {
+    images = [];
+    imagesSrc.forEach((imageSrc) => {
+        images.push(new Image());
+        images[images.length - 1].src = chrome.runtime.getURL(imageSrc);
+    });
+    graffitiImages.push(images);
+});
+var extraDrawImages = [];
 
 // Add canvas to body
 document.body.appendChild(canvas);
@@ -125,6 +145,25 @@ function updateTarget(sprite) {
                 hiddenElement.removeAttribute("id");
                 hiddenElement.setAttribute("style", "visibility: hidden;");
             }
+        } else if (sprite.current.animation.startsWith("spray_")) {
+            let halfWay = sprite.current.stepCount == 10;
+            // done with erasing
+            if (halfWay) {
+                extraDrawImages.push({
+                    image : graffitiImages[graffitiIndex][0],
+                    sx : 0,
+                    sy : 0,
+                    sWidth : GRAFFITI_SIZE,
+                    sHeight : GRAFFITI_SIZE,
+                    dx : (graffitiElement.getBoundingClientRect().left + window.scrollX) + 10, // not sure why X offset only is needed
+                    dy : (graffitiElement.getBoundingClientRect().top + window.scrollY),
+                    dWidth : graffitiElement.width,
+                    dHeight : graffitiElement.height
+                })
+            } else if (lastStep) {
+                extraDrawImages[extraDrawImages.length - 1].image = graffitiImages[graffitiIndex][1];
+                setNewAnimation(sprite.current, "walk_left", sprite.current.idleX, sprite.current.idleY, "walk_right");
+            }
         }
     }
 }
@@ -165,5 +204,20 @@ function renderSprite() {
 
 function animationLoop() {
   context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+
+  // Draw extra images first so sprites are on top
+  for (let i = 0; i < extraDrawImages.length; i++) {
+    context.drawImage(
+        extraDrawImages[i].image,
+        extraDrawImages[i].sx,
+        extraDrawImages[i].sy,
+        extraDrawImages[i].sWidth,
+        extraDrawImages[i].sHeight,
+        extraDrawImages[i].dx,
+        extraDrawImages[i].dy,
+        extraDrawImages[i].dWidth,
+        extraDrawImages[i].dHeight);
+  }
+
   renderSprite();
 }

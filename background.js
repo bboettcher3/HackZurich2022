@@ -23,6 +23,12 @@ chrome.runtime.onInstalled.addListener(async () => {
         type: 'normal',
         contexts: ['all'],
     });
+    chrome.contextMenus.create({
+        id: "graffiti",
+        title: "graffiti",
+        type: 'normal',
+        contexts: ['image'],
+    });
 });
 
 // Open a new search tab when the user clicks a context menu
