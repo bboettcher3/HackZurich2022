@@ -62,18 +62,25 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
             if (l[i].href == request.request.linkUrl) {
                 var a = currentPosition[0] - l[i].getBoundingClientRect().left;
                 var b = currentPosition[1] - l[i].getBoundingClientRect().top;
-                var distance = Math.hypot(a,b); 
+                var distance = Math.hypot(a,b);
                 if (distance < closestDistance) {
                     closestDistance = distance;
                     closestTargetRect = l[i].getBoundingClientRect();
                 }
-                
+
             }
         }
         if (closestTargetRect != {}) {
             console.log("link found with position: " + closestTargetRect.left + ", " + closestTargetRect.top);
 
         }
+    }
+
+    if (request.request.menuItemId == "debug_sleep") {
+        setNewAnimation(characters[1].current, isFacingRight(characters[1]) ? "sleep_right" : "sleep_left");
+        // stop moving
+        characters[1].current.targetX = characters[1].current.x;
+        characters[1].current.targetY = characters[1].current.y;
     }
 });
 

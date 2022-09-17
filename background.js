@@ -5,6 +5,12 @@ chrome.runtime.onInstalled.addListener(async () => {
         type: 'normal',
         contexts: ['link'],
     });
+    chrome.contextMenus.create({
+        id: "debug_sleep",
+        title: "DEBUG sleep",
+        type: 'normal',
+        contexts: ['all'],
+    });
 });
 
 // Open a new search tab when the user clicks a context menu
