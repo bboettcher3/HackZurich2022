@@ -19,29 +19,57 @@ addEventListener("mousemove", (e) => {
 // Add canvas to body
 document.body.appendChild(canvas);
 
-const FRAME_RATE_MS = 300;
+const FRAME_RATE_MS = 33; // 30 FPS
 
-const characters = ["bunny", "frog"];
-const animationSuffixes = ["back", "front", "left", "right", "turn_left", "turn_right"];
-var CHARACTER = characters[0];
-var curAnimFrame = 1; // Start facing front
+const characters = [
+    {
+        "name" : "bunny",
+        "source" : "images/bunny.png",
+        "height" : 128,
+        "width" : 128,
+        "animations" : {
+            "spin" : {
+                "count" : 6,
+                "steps" : [5, 5, 5, 5, 5, 5] // frame between each step
+            }
+        },
+    }
+];
+var currentCharacter = characters[0];
+var currentAnimation = "spin";
+var currentStep = 0;
+var frameCount = 0;
 
-setInterval(anim, FRAME_RATE_MS);
+var drawing = new Image();
+drawing.src = chrome.runtime.getURL(currentCharacter.source);
+drawing.onload = function() {
+    // start once everything is loaded
+    setInterval(anim, FRAME_RATE_MS);
+};
 
 function anim() {
-
   const context = canvas.getContext("2d");
   context.clearRect(0, 0, context.canvas.width, context.canvas.height);
 
-  // Cycle through animation frames
-  curAnimFrame = (curAnimFrame + 1) % animationSuffixes.length;
+  let animation = currentCharacter.animations[currentAnimation];
+  if (frameCount >= animation.steps[currentStep]) {
+      currentStep++;
+      if (currentStep >= animation.count) {
+        currentStep = 0;
+      }
+      frameCount = 0;
+  } else {
+    frameCount++;
+  }
 
   // Draw character in top left corner
-  let drawing = new Image();
-  drawing.src = chrome.runtime.getURL("images/" + CHARACTER + "/" 
-    + CHARACTER + "_" + animationSuffixes[curAnimFrame] + ".png");
-  drawing.onload = function() {
-    context.drawImage(drawing, 10, 10);
-  };
-
+  sx = 128 * currentStep;
+  sy = 0;
+  sWidth = currentCharacter.width;
+  sHeight = currentCharacter.height;
+  dx = 0;
+  dy = 0;
+  dWidth = currentCharacter.width;
+  dHeight = currentCharacter.height;
+  context.drawImage(drawing, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight);
 }
