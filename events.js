@@ -67,26 +67,23 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
                     closestDistance = distance;
                     closestTargetRect = l[i].getBoundingClientRect();
                 }
-
             }
         }
         if (closestTargetRect != {}) {
             console.log("link found with position: " + closestTargetRect.left + ", " + closestTargetRect.top);
-
+            const direction = (currentPosition[0] < closestTargetRect.left) ? "right" : "left";
+            setNewAnimation(characters[1].current, "walk_" + direction, closestTargetRect.left, closestTargetRect.top, "click_" + direction);
         }
     }
 
     if (request.request.menuItemId == "debug_sleep") {
-        setNewAnimation(characters[1].current, isFacingRight(characters[1]) ? "sleep_right" : "sleep_left");
-        // stop moving
-        characters[1].current.targetX = characters[1].current.x;
-        characters[1].current.targetY = characters[1].current.y;
+        const sleepAnim = isFacingRight(characters[1]) ? "sleep_right" : "sleep_left";
+        setNewAnimation(characters[1].current, sleepAnim,
+            characters[1].current.x, characters[1].current.y, "walk_left");
     } else if (request.request.menuItemId == "debug_dj") {
         audio.play();
-        setNewAnimation(characters[1].current, "dj_right");
-        // stop moving
-        characters[1].current.targetX = characters[1].current.x;
-        characters[1].current.targetY = characters[1].current.y;
+        setNewAnimation(characters[1].current, "dj_right",
+            characters[1].current.x, characters[1].current.y, "walk_left");
     }
 });
 

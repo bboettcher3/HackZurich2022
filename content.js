@@ -37,31 +37,36 @@ function isFacingRight(sprite) {
     return sprite.animations[sprite.current.animation].face > 0
 }
 
-function setNewAnimation(current, newAnimation) {
+function setNewAnimation(current, newAnimation, targetX, targetY, task="") {
     current.animation = newAnimation;
     current.frameCount = 0;
     current.stepCount = 0;
+    current.targetX = targetX;
+    current.targetY = targetY;
+    if (task != "") {
+        current.task = task;
+    }
 }
 
-function moveSprite(current) {
-    if (current.x != current.targetX) {
-        current.x += current.rateX;
-
+function moveSprite(sprite) {
+    if (!sprite.current.animation.startsWith("walk_")) return;
+    if (sprite.current.x != sprite.current.targetX) {
         // cap if went past target
-        // assumes rateX is not going the wrong direction
-        if (current.rateX > 0) {
-            current.x = Math.min(current.x, current.targetX);
-        } else if (current.rateX < 0) {
-            current.x = Math.max(current.x, current.targetX);
+        if (isFacingRight(sprite)) {
+            sprite.current.x += sprite.animations[sprite.current.animation].rate;
+            sprite.current.x = Math.min(sprite.current.x, sprite.current.targetX);
+        } else {
+            sprite.current.x -= sprite.animations[sprite.current.animation].rate;
+            sprite.current.x = Math.max(sprite.current.x, sprite.current.targetX);
         }
     }
-    if (current.y != current.targetY) {
-        current.y += current.rateY;
-
-        if (current.rateY > 0) {
-            current.y = Math.min(current.y, current.targetY);
-        } else if (current.rateY < 0) {
-            current.y = Math.max(current.y, current.targetY);
+    if (sprite.current.y != sprite.current.targetY) {
+        if (sprite.current.targetY > sprite.current.Y) {
+            sprite.current.y += sprite.animations[sprite.current.animation].rate;
+            sprite.current.y = Math.min(sprite.current.y, sprite.current.targetY);
+        } else {
+            sprite.current.y -= sprite.animations[sprite.current.animation].rate;
+            sprite.current.y = Math.max(sprite.current.y, sprite.current.targetY);
         }
     }
 }
@@ -71,20 +76,39 @@ function updateTarget(sprite) {
         // simple logic to have it go back and forth with hardcoded target
         if (sprite.current.animation.startsWith("walk_")) {
             if (sprite.current.x == sprite.current.targetX) {
-                sprite.current.targetX = (sprite.current.targetX == 0) ? 100 : 0;
-                // This is because drawImage() can't do a fast mirror/flip draw
-                setNewAnimation(sprite.current, sprite.animations[sprite.current.animation].flip);
-                sprite.current.rateX = Math.abs(sprite.current.rateX) * sprite.animations[sprite.current.animation].face;
+                // Done walking, do next task
+                if (sprite.current.task.startsWith("walk_")) {
+                    // Flip pacing if going from walk to walk
+                    // This is because drawImage() can't do a fast mirror/flip draw
+                    setNewAnimation(sprite.current, sprite.animations[sprite.current.animation].flip,
+                        (sprite.current.targetX == 0) ? sprite.current.idleX + 100 : sprite.current.idleX,
+                        sprite.current.idleY, sprite.current.animation);
+                } else {
+                    // Perform non-walking task
+                    setNewAnimation(sprite.current, sprite.current.task, sprite.current.x, sprite.current.y);
+                }
             }
         } else if (sprite.current.animation.startsWith("bump_")) {
             // done with bump
             if (sprite.current.stepCount == sprite.animations[sprite.current.animation].steps.length - 1) {
-                setNewAnimation(sprite.current, isFacingRight(sprite) ? "walk_right" : "walk_left");
-                sprite.current.targetX = isFacingRight(sprite) ? 100 : 0;
+                // Just walk left every time after getting bumped and resume pacing
+                setNewAnimation(sprite.current, "walk_left", sprite.current.idleX, sprite.current.idleY, "walk_right");
                 enableScroll();
                 // todo - make better to prevent loop
                 scroll(window.scrollX, sprite.current.y - 1);
                 sprite.current.bumped = true;
+            }
+        } else if (sprite.current.animation.startsWith("click_")) {
+            // done with click
+            if (sprite.current.stepCount == sprite.animations[sprite.current.animation].steps.length - 1) {
+                setNewAnimation(sprite.current, "walk_left", sprite.current.idleX, sprite.current.idleY, "walk_right");
+                // TODO: open link
+
+            }
+        } else if (sprite.current.animation.startsWith("sleep_")) {
+            // done with sleep
+            if (sprite.current.stepCount == sprite.animations[sprite.current.animation].steps.length - 1) {
+                setNewAnimation(sprite.current, "walk_left", sprite.current.idleX, sprite.current.idleY, "walk_right");
             }
         }
     }
@@ -97,7 +121,7 @@ function renderSprite() {
         if (sprite.current.spriteIndex == -1) { return; }
         assert(sprite.current.spriteIndex < currentSprites.length, "bad spirit length of " + sprite.current.spriteIndex + " for " + sprite.name);
 
-        moveSprite(sprite.current);
+        moveSprite(sprite);
         updateTarget(sprite);
 
         let animation = sprite.animations[sprite.current.animation];
