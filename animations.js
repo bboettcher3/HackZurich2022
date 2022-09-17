@@ -39,26 +39,29 @@ const characters = [
             "spriteIndex" : 1,
             "width" : 64, // display size
             "height" : 64,
-            "x" : 0,
+            "x" : 10,
             "y" : 300,
             "targetX" : 100,
             "targetY" : 0,
-            "rateX" : 2,
-            "rateY" : 0,
-            "bumped" : false
+            "bumped" : false,
+            "idleX": 0,
+            "idleY": 300,
+            "task": "walk_left" // Animation to perform once target is hit
         },
         "animations" : {
             "walk_left" : {
                 "row" : 0,
                 "steps" : [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
                 "flip" : "walk_right",
-                "face" : -1
+                "face" : -1,
+                "rate" : 2
             },
             "walk_right" : {
                 "row" : 1,
                 "steps" : [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
                 "flip" : "walk_left",
-                "face" : 1
+                "face" : 1,
+                "rate" : 2
             },
             "click_left" : {
                 "row" : 2,
@@ -86,13 +89,13 @@ const characters = [
             },
             "sleep_left" : {
                 "row" : 6,
-                "steps" : [1, 1, 1, 1, 1, 1, 1, 1, 1, 50, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+                "steps" : [1, 1, 1, 1, 1, 1, 1, 1, 1, 100, 1, 1, 1, 1, 1, 1, 1, 1, 1],
                 "flip" : "sleep_right",
                 "face" : -1
             },
             "sleep_right" : {
                 "row" : 7,
-                "steps" : [5, 1, 1, 1, 1, 1, 1, 1, 1, 50, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+                "steps" : [5, 1, 1, 1, 1, 1, 1, 1, 1, 100, 1, 1, 1, 1, 1, 1, 1, 1, 1],
                 "flip" : "sleep_left",
                 "face" : 1
             }
