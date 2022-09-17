@@ -95,6 +95,12 @@ const characters = [
                 "steps" : [5, 1, 1, 1, 1, 1, 1, 1, 1, 50, 1, 1, 1, 1, 1, 1, 1, 1, 1],
                 "flip" : "sleep_left",
                 "face" : 1
+            },
+            "dj_right" : {
+                "row" : 8,
+                "steps" : [4, 4],
+                "flip" : "dj_right",
+                "face" : 1
             }
         },
     }

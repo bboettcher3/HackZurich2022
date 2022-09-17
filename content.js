@@ -4,16 +4,7 @@ canvas.id = "pixel-peeps-canvas";
 canvas.width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
 canvas.height = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
 
-// TODO: Mouse following/interaction
-const cursor = {
-  x: innerWidth / 2,
-  y: innerHeight / 2,
-};
-
-addEventListener("mousemove", (e) => {
-  cursor.x = e.clientX;
-  cursor.y = e.clientY;
-});
+const audio = new Audio(chrome.runtime.getURL("audio/drop.mp3"));
 
 // Add canvas to body
 document.body.appendChild(canvas);

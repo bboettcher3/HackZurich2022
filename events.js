@@ -81,6 +81,12 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         // stop moving
         characters[1].current.targetX = characters[1].current.x;
         characters[1].current.targetY = characters[1].current.y;
+    } else if (request.request.menuItemId == "debug_dj") {
+        audio.play();
+        setNewAnimation(characters[1].current, "dj_right");
+        // stop moving
+        characters[1].current.targetX = characters[1].current.x;
+        characters[1].current.targetY = characters[1].current.y;
     }
 });
 
