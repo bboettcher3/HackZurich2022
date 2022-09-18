@@ -11,12 +11,9 @@ Pixel Peeps is a Chrome Extension that adds a cute animated frog on your web bro
 4. Refresh or open a https url and it should be activated
 
 
-https://devpost.com/software/pixel-peeps
-
 ## Check out our Demo
 
-[![IMAGE_ALT](https://img.youtube.com/vi/UmX4kyB2wfg/0.jpg)](https://youtu.be/fMywJjdI7g0)
-
+[![IMAGE_ALT](https://github.com/bboettcher3/HackZurich2022/blob/main/images/PixelPeeps.png)](https://youtu.be/fMywJjdI7g0)
 
 https://youtu.be/fMywJjdI7g0
 
@@ -62,5 +59,5 @@ There are multiple features we have in mind for future pixel peeps. Including, a
 
 
 ## Other Important Links
-
+https://devpost.com/software/pixel-peeps
 https://app.creatorspace.dev/pixelpeeps/projects/vSH6HMYU3u0Q4OX9
