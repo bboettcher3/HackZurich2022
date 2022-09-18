@@ -59,5 +59,9 @@ There are multiple features we have in mind for future pixel peeps. Including, a
 
 
 ## Other Important Links
-https://devpost.com/software/pixel-peeps
-https://app.creatorspace.dev/pixelpeeps/projects/vSH6HMYU3u0Q4OX9
+
+[Creator Space](https://app.creatorspace.dev/pixelpeeps/projects/vSH6HMYU3u0Q4OX9)
+
+[Devpost Link](https://devpost.com/software/pixel-peeps)
+
+[Youtube Demo](https://youtu.be/fMywJjdI7g0)
