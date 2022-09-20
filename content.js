@@ -49,6 +49,9 @@ function onSpriteLoad() {
         // start once everything is loaded
         setInterval(animationLoop, FRAME_RATE_MS);
         setInterval(timerCallback, 300); // every 2 second
+
+        // todo - better place to do this on load?
+        checkForSpecialSite();
     }
 }
 
@@ -132,10 +135,16 @@ function updateTarget(sprite) {
         } else if (sprite.current.animation.startsWith("click_")) {
             // done with click
             if (lastStep) {
-                setNewAnimation(sprite.current, "walk_left", sprite.current.idleX, sprite.current.idleY, "walk_right");
-                console.log(linkToClick);
-                chrome.runtime.sendMessage({url: linkToClick}, function(response) {});
-                linkToClick = "";
+                if (sprite.current.special == "linkClick") {
+                    setNewAnimation(sprite.current, "walk_left", sprite.current.idleX, sprite.current.idleY, "walk_right");
+                    chrome.runtime.sendMessage({url: linkToClick}, function(response) {});
+                    linkToClick = "";
+                } else if (sprite.current.special == "soundCloudPause") {
+                    getSoundCloudPlayButton().click();
+                    audio.play();
+                    setNewAnimation(sprite.current, "dj_right", sprite.current.x, sprite.current.y, "walk_right");
+                }
+                sprite.current.special = "";
             }
         } else if (sprite.current.animation.startsWith("sleep_")) {
             // done with sleep

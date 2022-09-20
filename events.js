@@ -85,6 +85,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
             // half the height since finger is in middle of body
             let fingerOffset = characters[0].current.height * .55;
             setNewAnimation(characters[0].current, "walk_" + direction, closestX - fingerOffset, closestY - fingerOffset, "click_" + direction);
+            characters[0].current.special = "linkClick";
         }
     } else  if (request.request.menuItemId == "sleep") {
         const sleepAnim = isFacingRight(characters[0]) ? "sleep_right" : "sleep_left";

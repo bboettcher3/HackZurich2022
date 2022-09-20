@@ -46,7 +46,8 @@ const characters = [
             "bumped" : false,
             "idleX": 0,
             "idleY": 300,
-            "task": "walk_left" // Animation to perform once target is hit
+            "task": "walk_left", // Animation to perform once target is hit
+            "special" : "" // set if a secondary special action is to be performed - TODO make task an array?
         },
         "animations" : {
             "walk_left" : {
