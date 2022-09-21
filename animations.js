@@ -47,7 +47,8 @@ const characters = [
             "idleX": 0,
             "idleY": 300,
             "task": "walk_left", // Animation to perform once target is hit
-            "special" : "" // set if a secondary special action is to be performed - TODO make task an array?
+            "special" : "", // set if a secondary special action is to be performed - TODO make task an array?
+            "textBox" : "" // set to display text above
         },
         "animations" : {
             "walk_left" : {

@@ -187,6 +187,38 @@ function updateTarget(sprite) {
     }
 }
 
+function drawTextBox(sprite) {
+    let margin = 5;
+    let radius = 10;
+    let height = 25; // one line only
+    // need to set font before mesure
+    context.font = '14px serif';
+    context.textAlign = 'center';
+    let width =  context.measureText(sprite.current.textBox).width + (margin * 2);
+    // offsets so it fits mouth (when walking / standing up)
+    let x = sprite.current.x + 20;
+    let y = sprite.current.y - 35;
+
+    let speechBubble = new Path2D();
+    speechBubble.moveTo(x + radius, y);
+    speechBubble.arcTo(x + width, y, x + width, y + height, radius);
+    speechBubble.arcTo(x + width, y + height, x, y + height, radius);
+    speechBubble.lineTo(x + 30, y + height);
+    speechBubble.lineTo(x + 15, y + height + 20);
+    speechBubble.lineTo(x + 10, y + height);
+    speechBubble.arcTo(x, y + height, x, y, radius);
+    speechBubble.arcTo(x, y, x + width, y, radius);
+    speechBubble.closePath();
+    context.stroke(speechBubble);
+
+    context.fillStyle = 'white';
+    context.fill(speechBubble);
+
+    // insert the text
+    context.fillStyle = 'black';
+    context.fillText(sprite.current.textBox, x + ((width) / 2), y + (height / 2) + margin);
+}
+
 function renderSprite() {
     // Note: if 2 or more sprites are on the same pixel,
     // the last in the array will be rendered last and seen over the other ones #PaintersAlgorithm
@@ -218,7 +250,11 @@ function renderSprite() {
             sprite.current.y, // dst Y
             sprite.current.width, // dst width
             sprite.current.height); // dst hight
-        });
+
+        if (sprite.current.textBox.length > 0) {
+            drawTextBox(sprite);
+        }
+    });
 }
 
 function animationLoop() {
